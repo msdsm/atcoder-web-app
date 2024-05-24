@@ -14,7 +14,7 @@ func NewAtcoderUserInfra() IAtcoderUserInfra {
 	return &atcoderUserInfra{}
 }
 
-func (ui *atcoderUserInfra) FetchAtcoderId(atcoderId string) error {
+func (aui *atcoderUserInfra) FetchAtcoderId(atcoderId string) error {
 	url := fmt.Sprintf("https://kenkoooo.com/atcoder/atcoder-api/v3/user/ac_rank?user=%s", atcoderId)
 
 	resp, err := http.Get(url)

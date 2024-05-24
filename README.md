@@ -77,21 +77,29 @@
 ### プロフィールまわり
 - 自分の1週間の提出、レート表示(get profile)
 - atcoder id 変更(post proile)
-- profile_controller -> user_usecase -> infra -> atcoder problems
+- user_controller -> user_usecase -> user_repository,infra -> atcoder problems
+- user_controllerは自分のIDとる
+- user_usecaseは自分のIDからatcoder id取得してinfraのgetstreak(id)とgetsubmission(id, 7days)たたいていい感じにレスポンス変形
 ### rival
 - ライバル追加、削除
 - rival_controller -> rival_usecase -> rival_repository -> db
 ### streak
 - ライバルと自分のstreak表示
-- streak_controller -> rival_usecase -> infra
+- rival_controller -> rival_usecase -> infra
+- rival_controllerは自分のIDからrivalのatcoder idすべてに対してgetstreak(id)とgetrating(id)たたいていい感じにレスポンス変形
 ### submission
 - ライバルと自分の1週間の提出表示
-- submission_controller -> rival_usecase -> infra
+- rival_controller -> rival_usecase -> infra
 - infraはatcoder problemsたたくだけ
 - usecaseはatcoder problems jsonから自分のsubmission response型に変換
 - controllerはクライアントで使用するjsonに変換
 
-
-### atcoder id 存在validate
-- https://kenkoooo.com/atcoder/atcoder-api/v3/user/ac_rank?user=fvjgt
-- これが404
+## todo
+- infra部分実装
+  - getstreak : string -> int
+  - getrating : string -> int
+  - getsubmission : (string, time) -> []submission
+- 上3つがusecaseからたたくもの
+- getstreak, getsubmissionはfetchSubmissionたたいて全件取得する
+- getratingは最後のsubmissionだけ取得すればよい
+- 実装後に使っていない関数削除
