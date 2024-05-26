@@ -41,8 +41,8 @@ func NewRouter(uc controller.IUserController, rc controller.IRivalController) *e
 	}))
 	t.POST("/rival/", rc.CreateRival)      // ライバルユーザー追加
 	t.DELETE("/rival/:id", rc.DeleteRival) // ライバルユーザー削除
-	// t.GET("/streak")               // ライバルユーザー情報取得
-	// t.GET("/submission")          // 今日の提出取得
+	t.GET("/table", rc.GetTable)           // ライバルユーザー情報取得
+	t.GET("/submission", rc.GetSubmission) // 今日の提出取得
 	// t.GET("/profile")             // 自分表示
 	t.POST("/profile/:id", uc.Update) // 自分のAtcoder ID 変更
 	return e

@@ -38,3 +38,8 @@ type FetchHistory struct {
 	ContestNameEn     string    `json:"ContestNameEn"`
 	EndTime           time.Time `json:"EndTime"`
 }
+
+type SimpleProblem struct {
+	Name string `json:"name"`
+	Diff int    `json:"diff"`
+}

@@ -13,6 +13,8 @@ import (
 type IRivalController interface {
 	CreateRival(c echo.Context) error
 	DeleteRival(c echo.Context) error
+	GetTable(c echo.Context) error
+	GetSubmission(c echo.Context) error
 }
 
 type rivalController struct {
@@ -50,4 +52,25 @@ func (rc *rivalController) DeleteRival(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return c.NoContent(http.StatusNoContent)
+}
+
+func (rc *rivalController) GetTable(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"].(uuid.UUID)
+	res, err := rc.ru.GetTable(userId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, res)
+}
+func (rc *rivalController) GetSubmission(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"].(uuid.UUID)
+	res, err := rc.ru.GetSubmission(userId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, res)
 }
