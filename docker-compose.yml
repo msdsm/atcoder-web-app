@@ -31,6 +31,8 @@ services:
       DB_PORT: ${POSTGRES_PORT}
       DB_SSLMODE: ${SSLMODE}
       API_DOMAIN: ${API_DOMAIN}
+      SECRET: ${SECRET}
+      FE_URL: ${FE_URL}
       TZ: Asia/Tokyo
 
   pgadmin:
