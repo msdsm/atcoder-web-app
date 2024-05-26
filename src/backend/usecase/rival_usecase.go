@@ -61,6 +61,7 @@ func (ru *rivalUsecase) GetRivalById(userId uuid.UUID, ID uuid.UUID) (model.Riva
 }
 
 func (ru *rivalUsecase) CreateRival(rival model.Rival) (model.RivalResponse, error) {
+	rival.ID = uuid.New()
 	if err := ru.rv.RivalValidate(rival); err != nil {
 		return model.RivalResponse{}, err
 	}

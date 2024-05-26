@@ -15,15 +15,15 @@ func main() {
 	// db
 	db := db.NewDB()
 
-	// repository
-	userRepository := repository.NewUserRepository(db)
-	rivalRepository := repository.NewRivalRepository(db)
-
 	// infra
 	atcoderHistoryInfra := infra.NewAtcoderHistoryInfra()
 	atcoderProblemInfra := infra.NewAtcoderProblemInfra()
 	atcoderSubmissionInfra := infra.NewAtcoderSubmissionInfra()
 	atcoderUserInfra := infra.NewAtcoderUserInfra()
+
+	// repository
+	userRepository := repository.NewUserRepository(db)
+	rivalRepository := repository.NewRivalRepository(db)
 
 	// validator
 	userValidator := validator.NewUserValidator(atcoderUserInfra)
@@ -55,6 +55,6 @@ func main() {
 	// router
 	e := router.NewRouter(userController, rivalController)
 
-	// port 8080
-	e.Logger.Fatal(e.Start(":8080"))
+	// port 8888
+	e.Logger.Fatal(e.Start(":8888"))
 }

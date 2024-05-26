@@ -1,6 +1,6 @@
 module atcoder-web-app
 
-go 1.22.2
+go 1.21.3
 
 require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible

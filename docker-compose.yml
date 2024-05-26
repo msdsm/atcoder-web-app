@@ -12,7 +12,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     volumes:
-      - postgres_streak_data:/var/lib/postgresql/data-${COMPOSE_PROJECT_NAME}
+      - ./_docker-volumes:/var/lib/postgresql/data-${COMPOSE_PROJECT_NAME}
       - ./src/backend/init.sql:/docker-entrypoint-initdb.d/init-${COMPOSE_PROJECT_NAME}.sql
 
   api:
@@ -29,9 +29,8 @@ services:
       DB_HOST: ${POSTGRES_HOST}
       DB_NAME: ${POSTGRES_DB}
       DB_PORT: ${POSTGRES_PORT}
+      DB_SSLMODE: ${SSLMODE}
       TZ: Asia/Tokyo
-    volumes:
-      - ./src/backend/:/app/
 
   pgadmin:
     image: dpage/pgadmin4:6.11
@@ -39,25 +38,21 @@ services:
     ports:
       - 80:80
     volumes:
-      - volume_pgadmin:/var/lib/pgadmin
+      - ./_docker-volumes:/var/lib/pgadmin-${COMPOSE_PROJECT_NAME}/
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    logging:
+      driver: "none"
     depends_on:
       - db
 
-  app:
-    build:
-      context: ./src/frontend
-      dockerfile: Dockerfile
-    container_name: app
-    ports:
-      - "3000:3000"
-    environment:
-      - WATCHPACK_POLLING=true # hot reload
-    volumes:
-      - ./src/frontend/:/app/
-
-volumes:
-  postgres_streak_data:
-  volume_pgadmin:
+  # app:
+  #   build:
+  #     context: ./src/frontend
+  #     dockerfile: Dockerfile
+  #   container_name: app
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - WATCHPACK_POLLING=true # hot reload

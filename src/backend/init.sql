@@ -9,6 +9,6 @@ CREATE TABLE rivals (
     id UUID PRIMARY KEY,
     rival_atcoder_id VARCHAR(255) NOT NULL,
     user_id UUID NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT unique_user_rival UNIQUE (user_id, rival_atcoder_id)
 );
