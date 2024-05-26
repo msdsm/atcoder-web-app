@@ -3,6 +3,7 @@ package usecase
 import (
 	"atcoder-web-app/model"
 	"atcoder-web-app/repository"
+	"atcoder-web-app/util"
 	"atcoder-web-app/validator"
 	"os"
 	"time"
@@ -16,16 +17,19 @@ type IUserUsecase interface {
 	SignUp(user model.User) (model.UserResponse, error)
 	Login(user model.User) (string, error)
 	Update(userId uuid.UUID, atcoderId string) (model.UserResponse, error)
+	// GetAtcoderId(userId uuid.UUID) (string, error)
 }
 
 type userUsecase struct {
-	ur repository.IUserRepository
-	uv validator.IUserValidator
+	ur  repository.IUserRepository
+	uv  validator.IUserValidator
+	auu util.IAtcoderUserUtil
+	asu util.IAtcoderSubmissionUtil
 }
 
 // コンストラクタ
-func NewUserUsecase(ur repository.IUserRepository, uv validator.IUserValidator) IUserUsecase {
-	return &userUsecase{ur, uv}
+func NewUserUsecase(ur repository.IUserRepository, uv validator.IUserValidator, auu util.IAtcoderUserUtil, asu util.IAtcoderSubmissionUtil) IUserUsecase {
+	return &userUsecase{ur, uv, auu, asu}
 }
 
 func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
@@ -90,3 +94,13 @@ func (uu *userUsecase) Update(userId uuid.UUID, atcoderId string) (model.UserRes
 	}
 	return resUser, nil
 }
+
+/*
+func (uu *userUsecase) GetAtcoderId(userId uuid.UUID) (string, error) {
+	storedUser := model.User{}
+	if err := uu.ur.GetUserById(&storedUser, userId); err != nil {
+		return "", err
+	}
+	return storedUser.AtcoderId, nil
+}
+*/

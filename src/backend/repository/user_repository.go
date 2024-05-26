@@ -9,6 +9,7 @@ import (
 )
 
 type IUserRepository interface {
+	GetUserById(user *model.User, userId uuid.UUID) error
 	GetUserByEmail(user *model.User, email string) error
 	CreateUser(user *model.User) error
 	UpdateAtcoderId(user *model.User, userId uuid.UUID, atcoderId string) error
@@ -20,6 +21,13 @@ type userRepository struct {
 // コンストラクタ
 func NewUserRepository(db *gorm.DB) IUserRepository {
 	return &userRepository{db}
+}
+
+func (ur *userRepository) GetUserById(user *model.User, userId uuid.UUID) error {
+	if err := ur.db.Where("ID=?", userId).First(user).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 func (ur *userRepository) GetUserByEmail(user *model.User, email string) error {

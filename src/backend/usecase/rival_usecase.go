@@ -21,14 +21,15 @@ type IRivalUsecase interface {
 }
 
 type rivalUsecase struct {
+	ur  repository.IUserRepository
 	rr  repository.IRivalRepository
 	rv  validator.IRivalValidator
 	asu util.IAtcoderSubmissionUtil
 	auu util.IAtcoderUserUtil
 }
 
-func NewTaskUsecase(rr repository.IRivalRepository, rv validator.IRivalValidator, asu util.IAtcoderSubmissionUtil, auu util.IAtcoderUserUtil) IRivalUsecase {
-	return &rivalUsecase{rr, rv, asu, auu}
+func NewTaskUsecase(ur repository.IUserRepository, rr repository.IRivalRepository, rv validator.IRivalValidator, asu util.IAtcoderSubmissionUtil, auu util.IAtcoderUserUtil) IRivalUsecase {
+	return &rivalUsecase{ur, rr, rv, asu, auu}
 }
 
 func (ru *rivalUsecase) GetAllRivals(userId uuid.UUID) ([]model.RivalResponse, error) {
@@ -88,7 +89,19 @@ func (ru *rivalUsecase) GetSubmission(userId uuid.UUID) ([]model.SubmissionRespo
 	if err != nil {
 		return submissions, err
 	}
+	// 今日の提出だけ取得
 	today := now.BeginningOfDay()
+
+	// 自分
+	var storedUser model.User
+	if err := ru.ur.GetUserById(&storedUser, userId); err != nil {
+		return submissions, err
+	}
+	atcoderId := storedUser.AtcoderId
+	res := ru.asu.GetSubmission(atcoderId, today)
+	submissions = append(submissions, (*res)...)
+
+	// ライバル
 	for _, rival := range rivalResponse {
 		res := ru.asu.GetSubmission(rival.RivalAtcoderId, today)
 		submissions = append(submissions, (*res)...)
@@ -102,6 +115,28 @@ func (ru *rivalUsecase) GetTable(userId uuid.UUID) ([]model.TableResponse, error
 	if err != nil {
 		return tables, err
 	}
+
+	// 自分追加
+	var storedUser model.User
+	if err := ru.ur.GetUserById(&storedUser, userId); err != nil {
+		return tables, err
+	}
+	atcoderId := storedUser.AtcoderId
+	rating, err := ru.auu.GetRating(atcoderId)
+	if err != nil {
+		return tables, err
+	}
+	streak, err := ru.auu.GetRating(atcoderId)
+	if err != nil {
+		return tables, err
+	}
+	tables = append(tables, model.TableResponse{
+		AtcoderId: atcoderId,
+		Rating:    rating,
+		Streak:    streak,
+	})
+
+	// ライバル追加
 	for _, rival := range rivalResponse {
 		rating, err := ru.auu.GetRating(rival.RivalAtcoderId)
 		if err != nil {
