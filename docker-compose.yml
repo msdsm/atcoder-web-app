@@ -30,6 +30,7 @@ services:
       DB_NAME: ${POSTGRES_DB}
       DB_PORT: ${POSTGRES_PORT}
       DB_SSLMODE: ${SSLMODE}
+      API_DOMAIN: ${API_DOMAIN}
       TZ: Asia/Tokyo
 
   pgadmin:

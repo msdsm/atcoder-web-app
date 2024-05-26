@@ -39,7 +39,7 @@ func NewRouter(uc controller.IUserController, rc controller.IRivalController) *e
 		SigningKey:  []byte(os.Getenv("SECRET")),
 		TokenLookup: "cookie:token",
 	}))
-	t.POST("/rival/", rc.CreateRival)      // ライバルユーザー追加
+	t.POST("/rival", rc.CreateRival)       // ライバルユーザー追加
 	t.DELETE("/rival/:id", rc.DeleteRival) // ライバルユーザー削除
 	t.GET("/table", rc.GetTable)           // ライバルユーザー情報取得
 	t.GET("/submission", rc.GetSubmission) // 今日の提出取得

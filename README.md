@@ -103,3 +103,11 @@
 - getstreak, getsubmissionはfetchSubmissionたたいて全件取得する
 - getratingは最後のsubmissionだけ取得すればよい
 - 実装後に使っていない関数削除
+
+## 動作確認
+- GET /csrf : ok
+- POST /signup : ok
+  - リクエストbodyに、email, password, atcoder_id
+  - atcoder_idのvalidationはできていないぽい
+- POST /login : ok
+  - リクエストbodyに、email, password
