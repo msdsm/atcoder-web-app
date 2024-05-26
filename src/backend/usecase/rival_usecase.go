@@ -28,7 +28,7 @@ type rivalUsecase struct {
 	auu util.IAtcoderUserUtil
 }
 
-func NewTaskUsecase(ur repository.IUserRepository, rr repository.IRivalRepository, rv validator.IRivalValidator, asu util.IAtcoderSubmissionUtil, auu util.IAtcoderUserUtil) IRivalUsecase {
+func NewRivalUsecase(ur repository.IUserRepository, rr repository.IRivalRepository, rv validator.IRivalValidator, asu util.IAtcoderSubmissionUtil, auu util.IAtcoderUserUtil) IRivalUsecase {
 	return &rivalUsecase{ur, rr, rv, asu, auu}
 }
 
