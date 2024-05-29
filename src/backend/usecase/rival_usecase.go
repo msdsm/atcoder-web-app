@@ -132,6 +132,7 @@ func (ru *rivalUsecase) GetTable(userId uuid.UUID) ([]model.TableResponse, error
 		return tables, err
 	}
 	tables = append(tables, model.TableResponse{
+		Id:        storedUser.ID,
 		AtcoderId: atcoderId,
 		Rating:    rating,
 		Streak:    streak,
@@ -148,6 +149,7 @@ func (ru *rivalUsecase) GetTable(userId uuid.UUID) ([]model.TableResponse, error
 			return nil, err
 		}
 		table := model.TableResponse{
+			Id:        rival.ID,
 			AtcoderId: rival.RivalAtcoderId,
 			Rating:    rating,
 			Streak:    streak,
