@@ -117,3 +117,17 @@
 - POST /profile/:id : updateで更新されたかどうかcheckできていない(同じatcoder idわたしてもレスポンス成功になっている)
 - GET /table : ok
 - GET /submission : ok
+
+
+## フロントメモ
+- 画面
+  - ログイン、サインアップ画面
+  - ホーム画面
+- component
+  - table
+    - 1行目が自分
+    - 2行目以降がライバル
+    - 1行目の横にatcoder ID変更機能
+    - 最終行の下にライバル追加ボタン
+    - 2行目以降の横にライバル削除ボタン
+  - submission
