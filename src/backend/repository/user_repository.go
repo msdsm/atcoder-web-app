@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type IUserRepository interface {
@@ -45,7 +46,9 @@ func (ur *userRepository) CreateUser(user *model.User) error {
 }
 
 func (ur *userRepository) UpdateAtcoderId(user *model.User, userId uuid.UUID, atcoderId string) error {
-	result := ur.db.Model(user).Where("id=?", userId).Update("atcoder_id", atcoderId)
+	result := ur.db.Model(user).Clauses(clause.Returning{}).Where("id=?", userId).Update("atcoder_id", atcoderId)
+	fmt.Println(user.ID)
+	fmt.Println(user.Email)
 	if result.Error != nil {
 		return result.Error
 	}

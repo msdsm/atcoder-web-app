@@ -127,7 +127,7 @@ func (ru *rivalUsecase) GetTable(userId uuid.UUID) ([]model.TableResponse, error
 	if err != nil {
 		return tables, err
 	}
-	streak, err := ru.auu.GetRating(atcoderId)
+	streak, err := ru.auu.GetStreak(atcoderId)
 	if err != nil {
 		return tables, err
 	}

@@ -5,6 +5,7 @@ import (
 	"atcoder-web-app/repository"
 	"atcoder-web-app/util"
 	"atcoder-web-app/validator"
+	"fmt"
 	"os"
 	"time"
 
@@ -88,6 +89,7 @@ func (uu *userUsecase) Update(userId uuid.UUID, atcoderId string) (model.UserRes
 	if err := uu.ur.UpdateAtcoderId(&storedUser, userId, atcoderId); err != nil {
 		return model.UserResponse{}, err
 	}
+	fmt.Println(storedUser)
 	resUser := model.UserResponse{
 		ID:        storedUser.ID,
 		Email:     storedUser.Email,

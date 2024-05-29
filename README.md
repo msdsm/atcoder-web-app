@@ -111,3 +111,9 @@
   - atcoder_idのvalidationはできていないぽい
 - POST /login : ok
   - リクエストbodyに、email, password
+- POST /logout : ok
+- POST /user/rival : ok
+- DELETE /user/rival/:id : ok
+- POST /profile/:id : updateで更新されたかどうかcheckできていない(同じatcoder idわたしてもレスポンス成功になっている)
+- GET /table : ok
+- GET /submission : ok

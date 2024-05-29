@@ -28,13 +28,12 @@ func NewRivalController(ru usecase.IRivalUsecase) IRivalController {
 func (rc *rivalController) CreateRival(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"]
-
+	userId := uuid.MustParse(claims["user_id"].(string))
 	rival := model.Rival{}
 	if err := c.Bind(&rival); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	rival.UserId = userId.(uuid.UUID)
+	rival.UserId = userId
 	rivalRes, err := rc.ru.CreateRival(rival)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -45,7 +44,7 @@ func (rc *rivalController) CreateRival(c echo.Context) error {
 func (rc *rivalController) DeleteRival(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"].(uuid.UUID)
+	userId := uuid.MustParse(claims["user_id"].(string))
 	idstr := c.Param("id")
 	id, _ := uuid.Parse(idstr)
 	if err := rc.ru.DeleteRival(userId, id); err != nil {
@@ -57,7 +56,7 @@ func (rc *rivalController) DeleteRival(c echo.Context) error {
 func (rc *rivalController) GetTable(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"].(uuid.UUID)
+	userId := uuid.MustParse(claims["user_id"].(string))
 	res, err := rc.ru.GetTable(userId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -67,7 +66,7 @@ func (rc *rivalController) GetTable(c echo.Context) error {
 func (rc *rivalController) GetSubmission(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"].(uuid.UUID)
+	userId := uuid.MustParse(claims["user_id"].(string))
 	res, err := rc.ru.GetSubmission(userId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())

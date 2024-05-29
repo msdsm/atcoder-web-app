@@ -85,10 +85,9 @@ func (uc *userController) CsrfToken(c echo.Context) error {
 func (uc *userController) Update(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"]
-	id := userId.(uuid.UUID)
+	userId := uuid.MustParse(claims["user_id"].(string))
 	atcoderId := c.Param("id")
-	userRes, err := uc.uu.Update(id, atcoderId)
+	userRes, err := uc.uu.Update(userId, atcoderId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 	}
