@@ -12,6 +12,11 @@ export type Submission = {
     diff: number
 }
 
+export type Rival = {
+    id: string
+    atcoder_id: string
+}
+
 export type CsrfToken = {
     csrf_token: string
 }

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { CsrfToken } from '../types'
-// import useStore from '../store'
+import useStore from '../store'
 
 // functional componentとしてuseErrorを作成
 export const useError = () => {
     const navigate = useNavigate()
-    // const resetEditedTask = useStore((state) => state.resetEditedTask)
+    const resetEditedRival = useStore((state) => state.resetEditedRival)
     const getCsrfToken = async() => {
         const { data } = await axios.get<CsrfToken>(
             `${process.env.REACT_APP_API_URL}/csrf`
@@ -21,12 +21,12 @@ export const useError = () => {
                 break
             case 'invalid or expired jwt':
                 alert('access token expired, please login')
-                // resetEditedTask()
+                resetEditedRival()
                 navigate('/')
                 break
             case 'missing or malformed jwt':
                 alert('access token is not valid, please login')
-                // resetEditedTask()
+                resetEditedRival()
                 navigate('/')
                 break
             case 'duplicated key not allowed':

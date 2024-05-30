@@ -11,5 +11,5 @@ type Rival struct {
 
 type RivalResponse struct {
 	ID             uuid.UUID `json:"id"`
-	RivalAtcoderId string    `json:"rival"`
+	RivalAtcoderId string    `json:"atcoder_id"`
 }

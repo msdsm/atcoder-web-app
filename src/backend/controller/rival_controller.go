@@ -15,6 +15,7 @@ type IRivalController interface {
 	DeleteRival(c echo.Context) error
 	GetTable(c echo.Context) error
 	GetSubmission(c echo.Context) error
+	GetAllRivals(c echo.Context) error
 }
 
 type rivalController struct {
@@ -63,11 +64,23 @@ func (rc *rivalController) GetTable(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, res)
 }
+
 func (rc *rivalController) GetSubmission(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := uuid.MustParse(claims["user_id"].(string))
 	res, err := rc.ru.GetSubmission(userId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
+func (rc *rivalController) GetAllRivals(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := uuid.MustParse(claims["user_id"].(string))
+	res, err := rc.ru.GetAllRivals(userId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}

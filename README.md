@@ -95,14 +95,12 @@
 - controllerはクライアントで使用するjsonに変換
 
 ## todo
-- infra部分実装
-  - getstreak : string -> int
-  - getrating : string -> int
-  - getsubmission : (string, time) -> []submission
-- 上3つがusecaseからたたくもの
-- getstreak, getsubmissionはfetchSubmissionたたいて全件取得する
-- getratingは最後のsubmissionだけ取得すればよい
-- 実装後に使っていない関数削除
+- apiのrival全取得テスト
+- 編集画面作成
+  - 上に自分のatcoder id編集コンポーネント
+  - 下にライバルユーザーのテーブル
+    - 各行の横に削除と編集？
+- デプロイ
 
 ## 動作確認
 - GET /csrf : ok

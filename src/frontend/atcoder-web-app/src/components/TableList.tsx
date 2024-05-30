@@ -1,9 +1,11 @@
-import { FC } from 'react'
+import { FC, FormEvent } from 'react'
 import { TableItem } from './TableItem'
 import { useQueryTables } from '../hooks/useQueryTables'
+import useStore from '../store'
 
 export const TableList: FC = () => {
     const {data, isLoading } = useQueryTables()
+    const { editedRival } = useStore()
     return (
         <div>
             <div className="w-full">

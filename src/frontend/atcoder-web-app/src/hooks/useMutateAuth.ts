@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { useMutation } from '@tanstack/react-query'
-// import useStore from '../store'
+import useStore from '../store'
 import { Credential } from '../types'
 import { useError } from './useError'
 import axios from 'axios'
 
 export const useMutateAuth = () => {
     const navigate = useNavigate()
-    // const resetEditedTask = useStore((state) => state.resetEditedTask)
+    const resetEditedRival = useStore((state) => state.resetEditedRival)
     const { switchErrorHandling } = useError()
 
     // 第一引数に関数, 第二引数にレスポンスに合わせた処理記述
@@ -48,7 +48,7 @@ export const useMutateAuth = () => {
             await axios.post(`${process.env.REACT_APP_API_URL}/logout`),
         {
             onSuccess: () => {
-                // resetEditedTask()
+                resetEditedRival()
                 navigate('/')
             },
             onError: (err: any) => {

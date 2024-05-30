@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import { Auth } from './components/Auth'
 import { User } from './components/User'
+import { Editing } from './components/Editing'
 import axios from 'axios'
 import { CsrfToken } from './types'
 
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/user" element={<User />} />
+        <Route path="/editing" element={<Editing />} />
       </Routes>
     </BrowserRouter>
   );
