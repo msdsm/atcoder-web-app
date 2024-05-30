@@ -13,6 +13,10 @@ import (
 
 func NewRouter(uc controller.IUserController, rc controller.IRivalController) *echo.Echo {
 	e := echo.New()
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "time=${time_rfc3339_nano}, method=${method}, uri=${uri}, status=${status}\n",
+	}))
+
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000", os.Getenv("FE_URL")},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept,
@@ -20,14 +24,16 @@ func NewRouter(uc controller.IUserController, rc controller.IRivalController) *e
 		AllowMethods:     []string{"GET", "PUT", "POST", "DELETE"},
 		AllowCredentials: true, // cookieの送受信を可能にする
 	}))
+
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
-		//CookieSameSite: http.SameSiteDefaultMode, // secure modeをfalseにしないとpostmanで動作確認できないから
-		//CookieMaxAge: 60,
+		// CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteDefaultMode, // secure modeをfalseにしないとpostmanで動作確認できないから
+		CookieMaxAge:   60,
 	}))
+
 	e.POST("/signup", uc.SignUp)
 	e.POST("/login", uc.LogIn)
 	e.POST("/logout", uc.LogOut)

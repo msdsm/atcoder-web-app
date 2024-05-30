@@ -8,11 +8,11 @@ const SubmissionItemMemo: FC<Submission> = ({
     diff,
 }) => {
     return (
-        <tr>
-            <td>{atcoder_id}</td>
-            <td>{time}</td>
-            <td>{problem}</td>
-            <td>{diff}</td>
+        <tr className="even:bg-gray-100">
+            <td className="px-6 py-4">{atcoder_id}</td>
+            <td className="px-6 py-4">{time}</td>
+            <td className="px-6 py-4">{problem}</td>
+            <td className="px-6 py-4">{diff}</td>
         </tr>
     )
 }

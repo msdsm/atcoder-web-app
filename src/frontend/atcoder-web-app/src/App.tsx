@@ -13,8 +13,9 @@ function App() {
       const { data } = await axios.get<CsrfToken>(
         `${process.env.REACT_APP_API_URL}/csrf`
       )
-      axios.defaults.headers.common['X-CSRF-Token'] = data.csrf_token // ヘッダーに付与
+      axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf_token // ヘッダーに付与
     }
+    console.log("useEffect of app component")
     getCsrfToken()
   }, [])
   return (

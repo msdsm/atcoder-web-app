@@ -131,3 +131,8 @@
     - 最終行の下にライバル追加ボタン
     - 2行目以降の横にライバル削除ボタン
   - submission
+
+## メモ
+- postmanでテスト<->chromeでテストの切り替えの際に以下が必要
+  - user_controllerのcookie.secure変更
+  - middlewareのsamemode

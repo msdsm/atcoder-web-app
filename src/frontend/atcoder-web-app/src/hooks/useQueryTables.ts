@@ -1,23 +1,23 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { Submission } from '../types'
+import { Table } from '../types'
 import { useError } from '../hooks/useError'
 
-export const useQuerySubmissions = () => {
+export const useQueryTables = () => {
     const { switchErrorHandling} = useError()
-    const getSubmissions = async () => {
-        const { data } = await axios.get<Submission[]>(
-            `${process.env.REACT_APP_API_URL}/user/submission`,
+    const getTables = async () => {
+        const { data } = await axios.get<Table[]>(
+            `${process.env.REACT_APP_API_URL}/user/table`,
             { withCredentials: true}
         )
         return data
     }
 
-    console.log("useQuerySubmissions")
+    console.log("useQueryTables")
 
-    return useQuery<Submission[], Error>({
-        queryKey: ['submissions'], // キャッシュのキー
-        queryFn: getSubmissions,
+    return useQuery<Table[], Error>({
+        queryKey: ['tables'], // キャッシュのキー
+        queryFn: getTables,
         staleTime: Infinity,
         onError: (err : any) => {
             if(err.response.data.message) {
