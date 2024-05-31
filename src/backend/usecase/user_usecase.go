@@ -18,7 +18,7 @@ type IUserUsecase interface {
 	SignUp(user model.User) (model.UserResponse, error)
 	Login(user model.User) (string, error)
 	Update(userId uuid.UUID, atcoderId string) (model.UserResponse, error)
-	// GetAtcoderId(userId uuid.UUID) (string, error)
+	GetAtcoderId(userId uuid.UUID) (string, error)
 }
 
 type userUsecase struct {
@@ -98,7 +98,6 @@ func (uu *userUsecase) Update(userId uuid.UUID, atcoderId string) (model.UserRes
 	return resUser, nil
 }
 
-/*
 func (uu *userUsecase) GetAtcoderId(userId uuid.UUID) (string, error) {
 	storedUser := model.User{}
 	if err := uu.ur.GetUserById(&storedUser, userId); err != nil {
@@ -106,4 +105,3 @@ func (uu *userUsecase) GetAtcoderId(userId uuid.UUID) (string, error) {
 	}
 	return storedUser.AtcoderId, nil
 }
-*/

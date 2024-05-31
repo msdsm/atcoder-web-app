@@ -5,8 +5,9 @@ import {
 import { useMutateAuth } from '../hooks/useMutateAuth'
 import { SubmissionList } from './SubmissionList'
 import { TableList } from './TableList'
+import { Editing } from './Editing'
 import { useQueryClient } from '@tanstack/react-query'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 export const User = () => {
   const queryClient = useQueryClient()

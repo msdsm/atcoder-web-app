@@ -15,4 +15,5 @@ const TableItemMemo: FC<Table> = ({
         </tr>
     )
 }
-export const TableItem = memo(TableItemMemo)
+// export const TableItem = memo(TableItemMemo)
+export const TableItem = TableItemMemo

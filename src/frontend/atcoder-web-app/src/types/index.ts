@@ -17,6 +17,10 @@ export type Rival = {
     atcoder_id: string
 }
 
+export type RivalRequest = {
+    rival: string
+}
+
 export type CsrfToken = {
     csrf_token: string
 }

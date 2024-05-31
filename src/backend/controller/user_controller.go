@@ -18,6 +18,7 @@ type IUserController interface {
 	LogOut(c echo.Context) error
 	CsrfToken(c echo.Context) error
 	Update(c echo.Context) error
+	GetAtcoderId(c echo.Context) error
 }
 
 type userController struct {
@@ -88,6 +89,17 @@ func (uc *userController) Update(c echo.Context) error {
 	userId := uuid.MustParse(claims["user_id"].(string))
 	atcoderId := c.Param("id")
 	userRes, err := uc.uu.Update(userId, atcoderId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, userRes)
+}
+
+func (uc *userController) GetAtcoderId(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := uuid.MustParse(claims["user_id"].(string))
+	userRes, err := uc.uu.GetAtcoderId(userId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 	}

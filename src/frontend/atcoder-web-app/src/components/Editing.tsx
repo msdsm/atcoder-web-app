@@ -7,13 +7,19 @@ import {
     ShieldCheckIcon,
 } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
+import { EditingRivalList } from './EditingRivalList'
+import { EditingProfile } from './EditingProfile'
+import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const Editing = () => {
-    const {data, isLoading } = useQueryRivals()
-    const { editedRival } = useStore()
-    const updateTable = useStore((state) => state.updateEditedRival)
-    const {createRivalMutation, updateRivalMutation, deleteRivalMutation} = useMutateRival()
-    console.log(data)
+    const queryClient = useQueryClient()
+    const navigate = useNavigate();
+    const navigateUser = () => {
+      queryClient.invalidateQueries(['tables'])
+      queryClient.invalidateQueries(['submissions'])
+      navigate('/user')
+    }
     return (
       <div className="flex justify-center items-center flex-col min-h-screen text-gray-600 font-mono">
          <div className="flex items-center my-3">
@@ -22,9 +28,12 @@ export const Editing = () => {
             Atcoder Rival App
           </span>
         </div>
-        <Link to="/user" className="m1-2 text-blue-500">
-          ユーザーリスト編集完了
-        </Link>
+        <div className="my-10"></div>
+        <EditingProfile/>
+        <div className="my-10"></div>
+        <EditingRivalList/>
+        <div className="my-10"></div>
+        <span className="ml-2 text-blue-500" onClick={navigateUser}>ライバルユーザーリスト編集完了</span>
         <div className="my-10"></div>
       </div>
     )
