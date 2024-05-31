@@ -5,6 +5,7 @@ import { useMutateAuth } from '../hooks/useMutateAuth'
 export const Auth = () => {
   const [email, setEmail] = useState('')
   const [pw, setPw] = useState('')
+  const [id, setId] = useState('')
   const [isLogin, setIsLogin] = useState(true)
   const { loginMutation, registerMutation } = useMutateAuth()
 
@@ -21,6 +22,7 @@ export const Auth = () => {
         .mutateAsync({
           email: email,
           password: pw,
+          atcoder_id: id,
         })
         .then(() =>
           loginMutation.mutate({
@@ -60,6 +62,18 @@ export const Auth = () => {
             value={pw}
             />
         </div>
+        {isLogin ?(<div></div>) : (
+          <div>
+            <input
+            className="mb-3 px-3 text-sm py-2 border border-gray-300"
+            name="id"
+            type="id"
+            placeholder="Atcoder ID"
+            onChange={(e) => setId(e.target.value)}
+            value={id}
+            />
+          </div>
+        )}
         <div className="flex justify-center my-2">
           <button
             className="disabled:opacity-40 py-2 px-4 rounded text-white bg-indigo-600"

@@ -33,7 +33,7 @@ export const User = () => {
       </div>
       <TableList />
       <Link to="/editing" className="m1-2 text-blue-500">
-        ユーザーリスト編集
+        ライバルユーザーリスト編集
       </Link>
       <div className="my-10"></div>
       <SubmissionList/>

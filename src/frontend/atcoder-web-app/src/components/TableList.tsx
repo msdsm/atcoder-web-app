@@ -9,7 +9,7 @@ export const TableList: FC = () => {
     return (
         <div>
             <div className="w-full">
-                <h2 className="text-xl font-bold mb-2">ユーザーリスト</h2>
+                <h2 className="text-xl font-bold mb-2">ライバルユーザーリスト</h2>
             </div>
             {isLoading ? (
                 <p>Loading...</p>

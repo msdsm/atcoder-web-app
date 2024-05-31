@@ -1,12 +1,5 @@
 # Atcoder web app
 
-
-## 要件
-- サインアップ、ログイン、ログアウト機能
-- ライバルユーザー登録、削除機能
-- ライバルユーザーたちと自分のatcoder_id, streak, rating表示機能
-- ライバルユーザーたちと自分の直近の提出表示機能
-
 ## DB設計
 ### usersテーブル
 - id : UUID primary key
@@ -20,116 +13,49 @@
 - id_to
 
 ## APIエンドポイント
-### /signup
+### POST /signup
 - ユーザー作成
 - email, password, atcoder_id入力
-- responseはstatus codeのみでok
-### /login
+### POST /login
 - ログイン
-- レスポンス成功時にatcoder_id返したい
-### /logout
+### POST /logout
 - ログアウト、ログイン画面にもどる
 ### POST /user/rival/{target_id}
 - ライバルユーザー追加
 - target_id(登録したいatcoder_idを入力)
-### delete /user/rival/{target_id}
+### DELETE /user/rival/{target_id}
 - 既存のライバルユーザー削除
 ### GET /user/rival
+- ライバルユーザーリスト取得
+### GET /user/table
 - ライバルユーザーのrating, streakのリスト取得
-### GET /user/submission/{atcoder_id}
-- ライバルユーザーたちの提出リスト取得(1日)
+### GET /user/submission/
+### GET /user/profile
+- 自分のatcoder_id取得
 ### POST /user/profile/{ID}
 - 自分のatcoder_id変更
-### GET /user/profile
-- 自分の情報取得
-- streak
-- 提出リスト(1週間)
 
 
 ## フロントcomponent
-### login画面
-- email, password入力
-- signupと切り替えられるボタン
-### signup画面
-- email, password, atcoder_id入力
-- loginと切り替えられるボタン
-### ホーム画面
+### login, signup画面
+- email, password入力でログイン
+- email, password, atcoder_id入力でsignup->login
+### user画面
 - ログイン後最初に表示
+- タイトル下にlogoutリンク
 - 上半分にライバルユーザーtableコンポーネント
+  - その下に編集リンク
 - 下半分にライバルユーザー提出リストコンポーネント
-- 右上とかにプロフィールボタンとサインアウトボタン
-### tableコンポーネント
-- atcoder_id, streak, ratingをテーブル表示
-- 各ユーザーの横に削除ボタン
-- テーブルの下にユーザー追加ボタンとテキストボックス
+### edit画面
+- 自分のatcoder id変更
+- ライバルユーザー追加
+- ライバルユーザー削除
 
-### 提出リストコンポーネント
-- ライバルユーザーたちと自分の今日のac情報表示(ACのみ)
-- ユーザーid, 問題、時刻、difficulty
-
-### プロフィールコンポーネント
-- streak, rating, 1週間のac情報表示(ACのみ)
-- atcoder_id変更ボタン
-
-## API依存メモ
-### ログイン、サインイン、サインアウトまわり
-- user_controller -> user_usecase -> user_repository -> db
-### プロフィールまわり
-- 自分の1週間の提出、レート表示(get profile)
-- atcoder id 変更(post proile)
-- user_controller -> user_usecase -> user_repository,infra -> atcoder problems
-- user_controllerは自分のIDとる
-- user_usecaseは自分のIDからatcoder id取得してinfraのgetstreak(id)とgetsubmission(id, 7days)たたいていい感じにレスポンス変形
-### rival
-- ライバル追加、削除
-- rival_controller -> rival_usecase -> rival_repository -> db
-### streak
-- ライバルと自分のstreak表示
-- rival_controller -> rival_usecase -> infra
-- rival_controllerは自分のIDからrivalのatcoder idすべてに対してgetstreak(id)とgetrating(id)たたいていい感じにレスポンス変形
-### submission
-- ライバルと自分の1週間の提出表示
-- rival_controller -> rival_usecase -> infra
-- infraはatcoder problemsたたくだけ
-- usecaseはatcoder problems jsonから自分のsubmission response型に変換
-- controllerはクライアントで使用するjsonに変換
 
 ## todo
-- apiのrival全取得テスト
-- 編集画面作成
-  - 上に自分のatcoder id編集コンポーネント
-  - 下にライバルユーザーのテーブル
-    - 各行の横に削除と編集？
 - デプロイ
 - GET Table, GET Submissionでユーザーが存在しないときなどerrを返さずに0,0を返したい
-
-## 動作確認
-- GET /csrf : ok
-- POST /signup : ok
-  - リクエストbodyに、email, password, atcoder_id
-  - atcoder_idのvalidationはできていないぽい
-- POST /login : ok
-  - リクエストbodyに、email, password
-- POST /logout : ok
-- POST /user/rival : ok
-- DELETE /user/rival/:id : ok
-- POST /profile/:id : updateで更新されたかどうかcheckできていない(同じatcoder idわたしてもレスポンス成功になっている)
-- GET /table : ok
-- GET /submission : ok
-
-
-## フロントメモ
-- 画面
-  - ログイン、サインアップ画面
-  - ホーム画面
-- component
-  - table
-    - 1行目が自分
-    - 2行目以降がライバル
-    - 1行目の横にatcoder ID変更機能
-    - 最終行の下にライバル追加ボタン
-    - 2行目以降の横にライバル削除ボタン
-  - submission
+- atcoder idのvalidationのバグ修正
 
 ## メモ
 - postmanでテスト<->chromeでテストの切り替えの際に以下が必要
