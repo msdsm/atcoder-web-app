@@ -1,5 +1,10 @@
 # Atcoder web app
 
+## 動かし方
+- `mv .env.sample .env`
+- `docker-compose -f docker-compose.yml up --build`
+- htpp://localhost:3000
+
 ## DB設計
 ### usersテーブル
 - id : UUID primary key
@@ -61,3 +66,4 @@
 - postmanでテスト<->chromeでテストの切り替えの際に以下が必要
   - user_controllerのcookie.secure変更
   - middlewareのsamemode
+- docker-compose.ymlで動かす<->npm start, go run main.goで別々に動かす際にdb.goのhost変える必要がある

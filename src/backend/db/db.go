@@ -11,7 +11,8 @@ import (
 
 func NewDB() *gorm.DB {
 	// host := os.Getenv("DB_HOST")
-	host := "localhost" // docker使わないで実行
+	// host := "localhost" // docker使わないで実行
+	host := os.Getenv("DB_HOST") // docker-compose.yml使って実行
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")

@@ -50,12 +50,12 @@ services:
     depends_on:
       - db
 
-  # app:
-  #   build:
-  #     context: ./src/frontend
-  #     dockerfile: Dockerfile
-  #   container_name: app
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - WATCHPACK_POLLING=true # hot reload
+  app:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
