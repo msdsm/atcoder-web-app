@@ -32,9 +32,7 @@ export const Editing = () => {
         <EditingProfile/>
         <div className="my-10"></div>
         <EditingRivalList/>
-        <div className="my-10"></div>
-        <span className="ml-2 text-blue-500" onClick={navigateUser}>ライバルユーザーリスト編集完了</span>
-        <div className="my-10"></div>
+        <span className="ml-2 text-blue-500 cursor-pointer" onClick={navigateUser}>ライバルユーザーリスト編集完了</span>
       </div>
     )
 }

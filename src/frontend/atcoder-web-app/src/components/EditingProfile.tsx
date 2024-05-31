@@ -21,7 +21,6 @@ export const EditingProfile = () => {
 
     const submitProfileHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("ここで自分のatcoder id変更apiたたく")
         updateProfileMutation.mutate(id, {
             onSuccess: () =>{
                 queryClient.invalidateQueries(['tables'])

@@ -29,7 +29,7 @@ export const User = () => {
         onClick={logout}
         className="h-6 w-6 my-6 text-blue-500 cursor-pointer"
       />
-      <span className="ml-2 text-blue-500" onClick={logout}>ログアウト</span>
+      <span className="ml-2 text-blue-500 cursor-pointer" onClick={logout}>ログアウト</span>
       </div>
       <TableList />
       <Link to="/editing" className="m1-2 text-blue-500">

@@ -31,6 +31,7 @@ export const EditingRivalList = () => {
         {
             onSuccess: () =>{
                 refetch()
+                setNewId(''); // フォームの内容をクリア
             }
         })
     }
@@ -53,7 +54,9 @@ export const EditingRivalList = () => {
                         {rivals?.map((rival, index) => (
                             <EditingRivalItem
                                 key={index}
+                                id={rival.id}
                                 atcoder_id={rival.atcoder_id}
+                                refetch={refetch}
                             />
                         ))}
                     </tbody>
