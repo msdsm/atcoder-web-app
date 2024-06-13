@@ -4,7 +4,12 @@
 - `mv .env.sample .env`
 - `docker-compose -f docker-compose.yml up --build`
 - htpp://localhost:3000
-
+## 使用例
+- 以下の画面のように自分とライバルユーザーのレートとstreakが画面上部に表示され、画面下部には今日の提出リストが表示される
+- 提出リストには問題とその難易度も表示される
+![image1](images/app.png)
+- 以下の画面のようにライバルユーザーの編集が可能
+![image2](images/edit.png)
 ## DB設計
 ### usersテーブル
 - id : UUID primary key
@@ -40,27 +45,6 @@
 ### POST /user/profile/{ID}
 - 自分のatcoder_id変更
 
-
-## フロントcomponent
-### login, signup画面
-- email, password入力でログイン
-- email, password, atcoder_id入力でsignup->login
-### user画面
-- ログイン後最初に表示
-- タイトル下にlogoutリンク
-- 上半分にライバルユーザーtableコンポーネント
-  - その下に編集リンク
-- 下半分にライバルユーザー提出リストコンポーネント
-### edit画面
-- 自分のatcoder id変更
-- ライバルユーザー追加
-- ライバルユーザー削除
-
-
-## todo
-- デプロイ
-- GET Table, GET Submissionでユーザーが存在しないときなどerrを返さずに0,0を返したい
-- atcoder idのvalidationのバグ修正
 
 ## メモ
 - postmanでテスト<->chromeでテストの切り替えの際に以下が必要
